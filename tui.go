@@ -11,7 +11,7 @@ import (
 func (ps *ProxySession) updateTable() {
 	ps.mu.Lock()
 	sessionID := ps.Proxy.ShortID()
-	provider := ps.Proxy.IP
+	host := ps.Proxy.IP
 	currentIP := ps.CurrentIP
 	location := ps.Location
 	status := ps.Status
@@ -52,7 +52,7 @@ func (ps *ProxySession) updateTable() {
 	}
 
 	app.QueueUpdateDraw(func() {
-		table.GetCell(row, 0).SetText(provider)
+		table.GetCell(row, 0).SetText(host)
 		table.GetCell(row, 1).SetText(sessionID)
 		table.GetCell(row, 2).SetText(status)
 		table.GetCell(row, 3).SetText(currentIP)
@@ -110,7 +110,7 @@ func updateDurations(sessions []*ProxySession) {
 }
 
 func initializeTable(proxies []Proxy) []*ProxySession {
-	headers := []string{"Provider", "Session ID", "Status", "IP Address", "Location", "Duration", "Checks", "Rotations", "Avg Latency (ms)", "Bandwidth"}
+	headers := []string{"Host", "Session ID", "Status", "IP Address", "Location", "Duration", "Checks", "Rotations", "Avg Latency (ms)", "Bandwidth"}
 	for col, header := range headers {
 		cell := tview.NewTableCell(header).
 			SetTextColor(tcell.ColorYellow).
