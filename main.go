@@ -53,15 +53,15 @@ func (t *IPTracker) registerIP(ip, sessionID string) {
 	for existingIP, ids := range t.ipToIDs {
 		for i, id := range ids {
 			if id == sessionID {
-				t.ipToIDs[existingIP] = append(ids[:i], ids[i+1:]...)
-				if len(t.ipToIDs[existingIP]) == 0 {
+				if t.ipToIDs[existingIP] = append(ids[:i], ids[i+1:]...); len(t.ipToIDs[existingIP]) == 0 {
 					delete(t.ipToIDs, existingIP)
 				}
-				break
+				goto register
 			}
 		}
 	}
 
+register:
 	t.ipToIDs[ip] = append(t.ipToIDs[ip], sessionID)
 }
 
@@ -69,12 +69,7 @@ func (t *IPTracker) isDuplicate(ip, sessionID string) bool {
 	t.mu.RLock()
 	defer t.mu.RUnlock()
 
-	ids, exists := t.ipToIDs[ip]
-	if !exists {
-		return false
-	}
-
-	for _, id := range ids {
+	for _, id := range t.ipToIDs[ip] {
 		if id != sessionID {
 			return true
 		}
