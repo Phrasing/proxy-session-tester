@@ -14,14 +14,6 @@ import (
 	"github.com/rivo/tview"
 )
 
-const (
-	statusStarting = "Starting"
-	statusStable   = "Stable"
-	statusDupe     = "Stable (Dupe)"
-	statusRotated  = "Rotated"
-	statusDead     = "DEAD"
-)
-
 var (
 	tlsProfile        = profiles.Chrome_133_PSK
 	chromeVersion     = tlsProfile.GetClientHelloId().Version

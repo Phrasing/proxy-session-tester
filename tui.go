@@ -8,6 +8,14 @@ import (
 	"github.com/rivo/tview"
 )
 
+const (
+	statusStarting = "Starting"
+	statusStable   = "Stable"
+	statusDupe     = "Stable (Dupe)"
+	statusRotated  = "Rotated"
+	statusDead     = "DEAD"
+)
+
 func (ps *ProxySession) updateTable() {
 	ps.mu.Lock()
 	sessionID := ps.Proxy.ShortID()
