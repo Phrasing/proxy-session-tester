@@ -8,6 +8,13 @@ import (
 
 	fhttp "github.com/bogdanfinn/fhttp"
 	tls_client "github.com/bogdanfinn/tls-client"
+	"github.com/bogdanfinn/tls-client/profiles"
+)
+
+var (
+	tlsProfile        = profiles.Chrome_133_PSK
+	chromeVersion     = tlsProfile.GetClientHelloId().Version
+	chromeFullVersion = chromeVersion + ".0.0.0"
 )
 
 type ipResponse struct {

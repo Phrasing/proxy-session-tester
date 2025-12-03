@@ -9,16 +9,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/bogdanfinn/tls-client/profiles"
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 )
 
 var (
-	tlsProfile        = profiles.Chrome_133_PSK
-	chromeVersion     = tlsProfile.GetClientHelloId().Version
-	chromeFullVersion = chromeVersion + ".0.0.0"
-
 	globalIPTracker = &IPTracker{ipToIDs: make(map[string][]string)}
 	app             *tview.Application
 	table           *tview.Table
