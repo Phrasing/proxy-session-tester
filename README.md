@@ -2,6 +2,8 @@
 
 A TUI application for monitoring proxy sessions with real-time status tracking.
 
+![Preview](assets/preview.png)
+
 ## Features
 
 - Monitors multiple proxies concurrently with configurable check intervals
