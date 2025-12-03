@@ -98,22 +98,55 @@ func parseProxies(filename string) ([]Proxy, error) {
 			continue
 		}
 
-		parts := strings.Split(line, ":")
+		line = strings.TrimPrefix(line, "http://")
+		line = strings.TrimPrefix(line, "https://")
 
-		switch len(parts) {
-		case 2:
-			proxies = append(proxies, Proxy{
-				IP:   parts[0],
-				Port: parts[1],
-			})
-		case 4:
-			proxies = append(proxies, Proxy{
-				IP:       parts[0],
-				Port:     parts[1],
-				Username: parts[2],
-				Password: parts[3],
-			})
+		var proxy Proxy
+
+		if strings.Contains(line, "@") {
+			parts := strings.Split(line, "@")
+			if len(parts) != 2 {
+				continue
+			}
+
+			creds := strings.Split(parts[0], ":")
+			if len(creds) != 2 {
+				continue
+			}
+
+			host := strings.Split(parts[1], ":")
+			if len(host) != 2 {
+				continue
+			}
+
+			proxy = Proxy{
+				IP:       host[0],
+				Port:     host[1],
+				Username: creds[0],
+				Password: creds[1],
+			}
+		} else {
+			parts := strings.Split(line, ":")
+
+			switch len(parts) {
+			case 2:
+				proxy = Proxy{
+					IP:   parts[0],
+					Port: parts[1],
+				}
+			case 4:
+				proxy = Proxy{
+					IP:       parts[0],
+					Port:     parts[1],
+					Username: parts[2],
+					Password: parts[3],
+				}
+			default:
+				continue
+			}
 		}
+
+		proxies = append(proxies, proxy)
 	}
 
 	if err := scanner.Err(); err != nil {

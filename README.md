@@ -35,6 +35,8 @@ One proxy per line:
 ```
 host:port
 host:port:username:password
+username:password@host:port
+http://username:password@host:port
 ```
 
 Lines starting with `#` are ignored.
